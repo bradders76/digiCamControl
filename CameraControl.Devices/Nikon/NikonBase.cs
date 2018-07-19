@@ -2406,29 +2406,34 @@ namespace CameraControl.Devices.Nikon
 
         public void DeviceReady(int retrynum)
         {
-            //uint cod = Convert.ToUInt32(_stillImageDevice.ExecuteWithNoData(CONST_CMD_DeviceReady));
-            while (true)
+            int retrycnt = 0;
+
+            do
             {
-                if (retrynum > 50)
-                    return;
+
                 ulong cod = (ulong)ExecuteWithNoData(CONST_CMD_DeviceReady);
                 if (cod != 0 && cod != ErrorCodes.MTP_OK)
                 {
                     if (cod == ErrorCodes.MTP_Device_Busy || cod == 0x800700AA)
                     {
-                       Console.WriteLine("Device not ready");
+                        Console.WriteLine("Device not ready");
                         Thread.Sleep(5);
-                        retrynum++;
                     }
                     else
                     {
-                       Console.WriteLine("Device ready code #0" + cod.ToString("X"));
+                        Console.WriteLine("Device ready code #0" + cod.ToString("X"));
                     }
                 }
-                return;
-            }
-        }
+                else
+                {
 
+                    return;
+
+                }
+
+            } while (retrycnt++ < retrynum);
+        }
+        
         public override void FormatStorage(object storageId)
         {
             DeviceReady();
