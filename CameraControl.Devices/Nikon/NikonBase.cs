@@ -2424,8 +2424,10 @@ namespace CameraControl.Devices.Nikon
                     {
                        Console.WriteLine("Device ready code #0" + cod.ToString("X"));
                     }
+                }else{
+                   return;
                 }
-                return;
+                // return;     
             }
         }
 
