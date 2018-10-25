@@ -505,7 +505,11 @@ namespace CameraControl.Devices
             {
                 if (retrynum > 5)
                 {
-                    return;
+                // timer needs to be restarted to service queue
+                    if (timerstate)
+                        _timer.Start();                
+                    return;                
+
                 }
                 try
                 {
@@ -546,6 +550,9 @@ namespace CameraControl.Devices
             {
                 if (retrynum > 5)
                 {
+                // timer needs to be restarted to service queue
+                    if (timerstate)
+                        _timer.Start();                
                     return;
                 }
                 try
@@ -587,6 +594,10 @@ namespace CameraControl.Devices
             {
                 if (retrynum > 5)
                 {
+                // timer needs to be restarted to service queue
+                    if (timerstate)
+                        _timer.Start();       
+                        
                     return;
                 }
                 try
